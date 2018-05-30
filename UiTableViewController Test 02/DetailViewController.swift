@@ -8,29 +8,64 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var cellImageView: UIImageView!
-    @IBOutlet weak var lbllocation: UILabel!
-    @IBOutlet weak var lbltel: UILabel!
-    
     
     
     var cellImage: String = ""
     var local1: String = ""
     var tel1: String = ""
+    var menu: String = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //delegate connection
+        detailTableView.dataSource = self
+        detailTableView.delegate = self
+        
         cellImageView.image = UIImage(named: cellImage)
-        lbltel.text = "location : \(tel1)"
-        lbllocation.text = "tel : \(local1)"
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+        
+//       if indexPath.row == 0 {
+//            cell.textLabel?.text = local1
+//            return cell
+//        } else if indexPath.row == 1 {
+//            cell.textLabel?.text = tel1
+//            return cell
+//        }else {
+//            cell.textLabel?.text = menu
+//            return cell
+//        }
+        
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = local1
+            return cell
+        case 1:
+            cell.textLabel?.text = tel1
+            return cell
+        default:
+            cell.textLabel?.text = menu
+            return cell
+        }
+    }
+    
+    
     
 
     /*
@@ -42,5 +77,4 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
